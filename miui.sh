@@ -23,7 +23,7 @@ if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 # OSS = Low Dimens
 
 API_BOT="8136206822:AAFM4gOpsJZZjNFg6G5c0F-yDkwrt1ZKDGo"
-CHATID="-2660236835"
+CHATID="-1002660236835"
 export CHATID API_BOT TYPE_KERNEL
 
 # Kernel build config
