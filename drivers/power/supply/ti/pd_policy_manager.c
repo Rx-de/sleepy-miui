@@ -385,23 +385,26 @@ static void usbpd_check_cp_sec_psy(struct usbpd_pm *pdpm)
 static bool ln8000_is_valid = false;
 static bool usbpd_check_ln8000_chg(struct usbpd_pm *pdpm)
 {
-	int rc;
-	union power_supply_propval val;
+        int rc;
+        union power_supply_propval val;
 
-	rc = power_supply_get_property(pdpm->cp_psy,
-				POWER_SUPPLY_PROP_MODEL_NAME, &val);
-	if (rc < 0) {
-		pr_err("Failed getting charger IC name, rc=%d\n", rc);
-		ln8000_is_valid = false;
-	}
+        rc = power_supply_get_property(pdpm->cp_psy,
+                                        POWER_SUPPLY_PROP_MODEL_NAME, &val);
+        if (rc < 0) {
+                pr_err("Failed getting charger IC name, rc=%d\n", rc);
+                ln8000_is_valid = false;
+                return false; // Return false on error
+        }
 
-	if (strcmp(val.strval, "ln8000") == 0) {
-		ln8000_is_valid = true;
+        if (strcmp(val.strval, "ln8000") == 0) {
+                ln8000_is_valid = true;
                 pr_err("Getting ln8000 charger IC name, rc=%d\n", rc);
-	} else {
-		ln8000_is_valid = false;
+                return true; // Return true if "ln8000" found
+        } else {
+                ln8000_is_valid = false;
                 pr_err("Failed getting ln8000 charger IC name, rc=%d\n", rc);
-	}
+                return false; // Return false if "ln8000" not found
+        }
 }
 
 static int usbpd_get_effective_fcc_val(struct usbpd_pm *pdpm)
