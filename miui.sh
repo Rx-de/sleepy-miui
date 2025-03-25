@@ -41,7 +41,7 @@ MESIN="Git Workflows"
 if [ "$DEVICE_TYPE" == sweet  ];
 then
 DEVICE="REDMI NOTE 10 PRO (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-"
+KERNEL_NAME="SLEEPY_KERNEL"
 CODENAME="SWEET"
 
 DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
@@ -109,9 +109,9 @@ Start=$(date +"%s")
                               OBJDUMP=llvm-objdump \
                               STRIP=llvm-strip \
                               CC=clang \
-			      CLANG_TRIPLE=aarch64-linux-gnu- \
+			                        CLANG_TRIPLE=aarch64-linux-gnu- \
                               CROSS_COMPILE=aarch64-linux-gnu- \
-			      CROSS_COMPILE=aarch64-linux-android- \
+			                        CROSS_COMPILE=aarch64-linux-android- \
                               CROSS_COMPILE_ARM32=arm-linux-gnueabi-  2>&1 | tee error.log
 
 End=$(date +"%s")
