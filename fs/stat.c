@@ -371,10 +371,6 @@ SYSCALL_DEFINE2(newlstat, const char __user *, filename,
 	struct kstat stat;
 	int error;
 
-#ifdef CONFIG_KSU
-ksu_handle_stat(&dfd, &filename, &flag);
-#endif
-
 	error = vfs_lstat(filename, &stat);
 	if (error)
 		return error;
@@ -390,7 +386,7 @@ SYSCALL_DEFINE4(newfstatat, int, dfd, const char __user *, filename,
 	int error;
 
 #ifdef CONFIG_KSU
-       ksu_handle_stat(&dfd, &filename, &flag); /* 32-bit su */
+	ksu_handle_stat(&dfd, &filename, &flag);
 #endif
 
 	error = vfs_fstatat(dfd, filename, &stat, flag);
@@ -536,6 +532,10 @@ SYSCALL_DEFINE4(fstatat64, int, dfd, const char __user *, filename,
 {
 	struct kstat stat;
 	int error;
+  
+#ifdef CONFIG_KSU
+       ksu_handle_stat(&dfd, &filename, &flag); /* 32-bit su */
+#endif
 
 	error = vfs_fstatat(dfd, filename, &stat, flag);
 	if (error)
